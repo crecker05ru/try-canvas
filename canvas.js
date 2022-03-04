@@ -592,7 +592,7 @@ function drawLineAndCircleFromTo([fromX,fromY],[toX,toY]){
     console.log('currentX',currentX)
     function lineAnimation(){
         if(currentX < toX || currentY < toY){
-            ctx.clearRect(0,0,800,400)
+            // ctx.clearRect(0,0,800,400)
             ctx.beginPath()
             ctx.moveTo(fromX,fromY)
             currentX += currentX < toX ? 1 : 0
@@ -601,12 +601,15 @@ function drawLineAndCircleFromTo([fromX,fromY],[toX,toY]){
             ctx.arc(currentX,currentY ,5,0,Math.PI+(Math.PI*1),false)   
             ctx.stroke()
         }
-        
-        setTimeout(lineAnimation,1000/40)
+        // ctx.stroke()
+        // setTimeout(lineAnimation,1000/40)
+        window.requestAnimationFrame(lineAnimation)
     }
     lineAnimation()
 }
-drawLineAndCircleFromTo([100,220],[250,320])
+// drawLineAndCircleFromTo([100,220],[250,320])
+// drawLineAndCircleFromTo([150,220],[250,320])
+
 
 function moveFromTo([fromX,fromY],[toX,toY]) {
     let currentX = fromX
@@ -620,10 +623,114 @@ function moveFrom([fromX,fromY]){
     currentX += currentX < ctx.canvas.width ? 1 : 0
     currentY += currentY < ctx.canvas.width ? 1 : 0
 }
-function moveTo(x,y){
-    x += x < ctx.canvas.width ? 1 : 0
-    y += y < ctx.canvas.width ? 1 : 0
+function moveGraph(point){
+    point.fromX += point.fromX < ctx.canvas.width ? 1 : 0
+    point.fromY += point.fromY < ctx.canvas.width ? 1 : 0
+};
+function moveTo(point){
+    point.fromX += point.fromX < point.toX ? 1 : 0
+    point.fromY += point.fromY < point.toY ? 1 : 0
   };
+
+let dataFrom2 = [200,150]
+let dataTo2 = [300,150]
+
+const drawLine = (point) => {
+    ctx.beginPath();
+    ctx.moveTo(point.fromX, point.fromY);
+    ctx.lineTo(point.toX,point.toY);
+    // ctx.beginPath();
+    // ctx.moveTo(point.fromX, point.fromY);
+    // ctx.arc(0,0,5,0,Math.PI+(Math.PI*1),false)
+    ctx.stroke();
+};
+
+let points = [
+    {
+        fromX:50,
+        fromY:200,
+        toX: 100,
+        toY: 150
+    },{
+        fromX:100,
+        fromY:150,
+        toX: 150,
+        toY: 200
+    },{
+        fromX:150,
+        fromY:200,
+        toX: 200,
+        toY: 250
+    },{
+        fromX:200,
+        fromY:250,
+        toX: 250,
+        toY: 200
+    },{
+        fromX:250,
+        fromY:200,
+        toX: 300,
+        toY: 220
+    },{
+        fromX:300,
+        fromY:220,
+        toX: 350,
+        toY: 280
+    },{
+        fromX:350,
+        fromY:280,
+        toX: 400,
+        toY: 250
+    },{
+        fromX:400,
+        fromY:250,
+        toX: 450,
+        toY: 280
+    },{
+        fromX:450,
+        fromY:280,
+        toX: 500,
+        toY: 220
+    },{
+        fromX:500,
+        fromY:220,
+        toX: 550,
+        toY: 280
+    },{
+        fromX:550,
+        fromY:280,
+        toX: 600,
+        toY: 200
+    },{
+        fromX:600,
+        fromY:200,
+        toX: 650,
+        toY: 200
+    },{
+        fromX:650,
+        fromY:200,
+        toX: 700,
+        toY: 180
+    },
+]
+
+function loop(){
+    window.requestAnimationFrame(loop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    // points.forEach(point => {
+    //     moveGraph(point);
+    //   });
+    points.forEach(point => {
+        moveTo(point);
+    });
+
+    points.forEach(point => {
+
+            drawLine(point);
+
+    })
+}
+loop()
 // drawLineAndCircle(100,300)
 // drawLineAndCircle(150,330)
 // drawLineAndCircle(200,330)
@@ -639,11 +746,15 @@ function drawGraph(){
 let dataFrom = [200,150]
 let dataTo = [300,150]
 function example(){
-    window.requestAnimationFrame(drawGraph)
+    // window.requestAnimationFrame(drawGraph)
     ctx.moveTo(50,200)
     // drawLineAndCircle(dataFrom)
     // drawLineAndCircleFromTo(dataFrom,dataTo)
     // moveTo(dataFrom[0],dataFrom[1])
+    // for([from,to] of inputArr){
+    //     console.log('from,to',from,to)
+    //     drawLineAndCircleFromTo(from,to)
+    // }
     
 }
 example()
