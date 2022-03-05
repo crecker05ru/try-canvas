@@ -642,13 +642,13 @@ function moveGraph(point){
 // };
 
 function moveTo(point){
-    if(point.currentX <= point.toX){
+    if(point.currentX <= point.toX - 1){
         point.currentX += 1
-    } if(point.currentX >= point.toX){
+    } if(point.currentX >= point.toX + 1){
         point.currentX -= 1
-    } if(point.currentY <= point.toY){
+    } if(point.currentY <= point.toY - 1){
         point.currentY += 1
-    } if(point.currentY >= point.toY){
+    } if(point.currentY >= point.toY + 1){
         point.currentY -= 1
     } 
     // point.fromX += point.fromX < point.toX ? 1 : 0
@@ -680,15 +680,26 @@ let dataTo2 = [300,150]
 // };
 const drawLine = (point) => {
     ctx.beginPath();
-    ctx.moveTo(point.fromX, point.fromY);
-    ctx.arc(point.currentX,point.currentY ,5,0,Math.PI+(Math.PI*1),false) 
-    // ctx.stroke();
     // ctx.moveTo(point.fromX, point.fromY);
+    
+    
+    ctx.arc(point.currentX,point.currentY ,5,0,Math.PI+(Math.PI*1),false) 
+    ctx.moveTo(point.fromX, point.fromY);
+    // ctx.lineTo(point.toX,point.toY);
+    
+    ctx.lineTo(point.currentX,point.currentY);
     ctx.lineTo(point.toX,point.toY);
+    // ctx.stroke();
+   
     ctx.stroke();
 };
 let points = [
     {
+        fromX:50,
+        fromY:200,
+        toX: 50,
+        toY: 200
+    },{
         fromX:50,
         fromY:200,
         toX: 100,
@@ -757,7 +768,8 @@ let points = [
 ]
 let mappedPoints = points.map((p) => ({...p, currentX:p.fromX,...p, currentY:p.fromY}));
 function loop(){
-    window.requestAnimationFrame(loop);
+    // window.requestAnimationFrame(loop);
+    setTimeout(loop,1000/60)
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     // points.forEach(point => {
     //     moveGraph(point);
@@ -778,7 +790,7 @@ switchButton.addEventListener('click',loop)
 // drawLineAndCircle(150,330)
 // drawLineAndCircle(200,330)
 function drawGraph(){
-    window.requestAnimationFrame(drawGraph)
+    // window.requestAnimationFrame(drawGraph)
     ctx.moveTo(50,200)
     // inputData.from.forEach(drawLineAndCircle)
     inputData.to.forEach(moveTo)
