@@ -627,28 +627,28 @@ function moveGraph(point){
     point.fromX += point.fromX < ctx.canvas.width ? 1 : 0
     point.fromY += point.fromY < ctx.canvas.width ? 1 : 0
 };
-function moveTo(point){
-    if(point.fromX < point.toX){
-        point.fromX += 1
-    } if(point.fromX > point.toX){
-        point.fromX -= 1
-    } if(point.fromY < point.toY){
-        point.fromY += 1
-    } if(point.fromY > point.toY){
-        point.fromY -= 1
-    } 
-    // point.fromX += point.fromX < point.toX ? 1 : 0
-    // point.fromY += point.fromY < point.toY ? 1 : 0
-};
+// function moveTo(point){
+//     if(point.fromX < point.toX){
+//         point.fromX += 1
+//     } if(point.fromX > point.toX){
+//         point.fromX -= 1
+//     } if(point.fromY < point.toY){
+//         point.fromY += 1
+//     } if(point.fromY > point.toY){
+//         point.fromY -= 1
+//     } 
+//     // point.fromX += point.fromX < point.toX ? 1 : 0
+//     // point.fromY += point.fromY < point.toY ? 1 : 0
+// };
 
 function moveTo(point){
-    if(point.currentX< point.toX){
+    if(point.currentX <= point.toX){
         point.currentX += 1
-    } if(point.currentX > point.toX){
+    } if(point.currentX >= point.toX){
         point.currentX -= 1
-    } if(point.currentY < point.toY){
+    } if(point.currentY <= point.toY){
         point.currentY += 1
-    } if(point.currentY > point.toY){
+    } if(point.currentY >= point.toY){
         point.currentY -= 1
     } 
     // point.fromX += point.fromX < point.toX ? 1 : 0
@@ -669,16 +669,24 @@ let dataTo2 = [300,150]
 //     ctx.stroke();
 // };
 
+// const drawLine = (point) => {
+//     ctx.beginPath();
+//     ctx.moveTo(point.fromX, point.fromY);
+//     ctx.lineTo(point.toX,point.toY);
+//     // ctx.beginPath();
+//     ctx.moveTo(point.fromX, point.fromY);
+//     ctx.arc(point.currentX,point.currentY ,5,0,Math.PI+(Math.PI*1),false) 
+//     ctx.stroke();
+// };
 const drawLine = (point) => {
     ctx.beginPath();
     ctx.moveTo(point.fromX, point.fromY);
-    ctx.lineTo(point.toX,point.toY);
-    // ctx.beginPath();
-    ctx.moveTo(point.fromX, point.fromY);
     ctx.arc(point.currentX,point.currentY ,5,0,Math.PI+(Math.PI*1),false) 
     ctx.stroke();
+    // ctx.moveTo(point.fromX, point.fromY);
+    ctx.lineTo(point.toX,point.toY);
+    ctx.stroke();
 };
-
 let points = [
     {
         fromX:50,
