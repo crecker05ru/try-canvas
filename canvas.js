@@ -682,7 +682,7 @@ const drawLine = (point) => {
     ctx.beginPath();
     ctx.moveTo(point.fromX, point.fromY);
     ctx.arc(point.currentX,point.currentY ,5,0,Math.PI+(Math.PI*1),false) 
-    ctx.stroke();
+    // ctx.stroke();
     // ctx.moveTo(point.fromX, point.fromY);
     ctx.lineTo(point.toX,point.toY);
     ctx.stroke();
