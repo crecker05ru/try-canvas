@@ -628,20 +628,54 @@ function moveGraph(point){
     point.fromY += point.fromY < ctx.canvas.width ? 1 : 0
 };
 function moveTo(point){
-    point.fromX += point.fromX < point.toX ? 1 : 0
-    point.fromY += point.fromY < point.toY ? 1 : 0
-  };
+    if(point.fromX < point.toX){
+        point.fromX += 1
+    } if(point.fromX > point.toX){
+        point.fromX -= 1
+    } if(point.fromY < point.toY){
+        point.fromY += 1
+    } if(point.fromY > point.toY){
+        point.fromY -= 1
+    } 
+    // point.fromX += point.fromX < point.toX ? 1 : 0
+    // point.fromY += point.fromY < point.toY ? 1 : 0
+};
 
+function moveTo(point){
+    if(point.currentX< point.toX){
+        point.currentX += 1
+    } if(point.currentX > point.toX){
+        point.currentX -= 1
+    } if(point.currentY < point.toY){
+        point.currentY += 1
+    } if(point.currentY > point.toY){
+        point.currentY -= 1
+    } 
+    // point.fromX += point.fromX < point.toX ? 1 : 0
+    // point.fromY += point.fromY < point.toY ? 1 : 0
+};
 let dataFrom2 = [200,150]
 let dataTo2 = [300,150]
+
+// const drawLine = (point) => {
+//     let currentX = point.fromX
+//     let currentY = point.fromY
+//     ctx.beginPath();
+//     ctx.moveTo(point.fromX, point.fromY);
+//     ctx.lineTo(point.toX,point.toY);
+//     // ctx.beginPath();
+//     ctx.moveTo(point.fromX, point.fromY);
+//     ctx.arc(currentX,currentY ,5,0,Math.PI+(Math.PI*1),false) 
+//     ctx.stroke();
+// };
 
 const drawLine = (point) => {
     ctx.beginPath();
     ctx.moveTo(point.fromX, point.fromY);
     ctx.lineTo(point.toX,point.toY);
     // ctx.beginPath();
-    // ctx.moveTo(point.fromX, point.fromY);
-    // ctx.arc(0,0,5,0,Math.PI+(Math.PI*1),false)
+    ctx.moveTo(point.fromX, point.fromY);
+    ctx.arc(point.currentX,point.currentY ,5,0,Math.PI+(Math.PI*1),false) 
     ctx.stroke();
 };
 
@@ -713,24 +747,25 @@ let points = [
         toY: 180
     },
 ]
-
+let mappedPoints = points.map((p) => ({...p, currentX:p.fromX,...p, currentY:p.fromY}));
 function loop(){
     window.requestAnimationFrame(loop);
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     // points.forEach(point => {
     //     moveGraph(point);
     //   });
-    points.forEach(point => {
+    mappedPoints.forEach(point => {
         moveTo(point);
     });
 
-    points.forEach(point => {
+    mappedPoints.forEach(point => {
 
             drawLine(point);
 
     })
 }
-loop()
+
+switchButton.addEventListener('click',loop)
 // drawLineAndCircle(100,300)
 // drawLineAndCircle(150,330)
 // drawLineAndCircle(200,330)
