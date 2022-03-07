@@ -2,6 +2,7 @@
 let startButton = document.querySelector('.start-button')
 let stopButton = document.querySelector('.stop-button')
 let switchButton = document.querySelector('.switch-button')
+let switchButtonReverse = document.querySelector('.switch-button-reverse')
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 console.log('ctx',ctx)
@@ -642,18 +643,43 @@ function moveGraph(point){
 // };
 
 function moveTo(point){
-    if(point.currentX <= point.toX - 1){
-        point.currentX += 1
-    } if(point.currentX >= point.toX + 1){
-        point.currentX -= 1
-    } if(point.currentY <= point.toY - 1){
-        point.currentY += 1
-    } if(point.currentY >= point.toY + 1){
-        point.currentY -= 1
+    let cofX = point.currentX / point.toX
+    let cofY = point.currentY / point.toY
+    // if(point.currentX == point.toX){
+    //     point.currentX += 0
+    // }if(point.currentY == point.toY){
+    //     point.currentY += 0
+    // }
+    if(point.currentX < point.toX){
+        point.currentX += 1 * cofX
+    } if(point.currentX > point.toX ){
+        point.currentX -= 1 * cofX
+    }if(point.currentY < point.toY ){
+        point.currentY += 1 * cofY
+    } if(point.currentY > point.toY ){
+        point.currentY -= 1 * cofY
     } 
     // point.fromX += point.fromX < point.toX ? 1 : 0
     // point.fromY += point.fromY < point.toY ? 1 : 0
+
 };
+
+function reverseMoveTo(point){
+    let cofX = point.currentX / point.toX
+    let cofY = point.currentY / point.toY
+    if(point.currentX < point.fromX - 1){
+        point.currentX += 1 * cofX
+    } if(point.currentX > point.fromX + 1){
+        point.currentX -= 1 * cofX
+    } if(point.currentY < point.fromY - 1) {
+        point.currentY += 1 * cofY
+    } if(point.currentY > point.fromY + 1){
+        point.currentY -= 1 * cofY
+    }
+    // point.fromX += point.fromX < point.toX ? 1 : 0
+    // point.fromY += point.fromY < point.toY ? 1 : 0
+};
+
 let dataFrom2 = [200,150]
 let dataTo2 = [300,150]
 
@@ -689,8 +715,7 @@ const drawLine = (point) => {
     
     ctx.lineTo(point.currentX,point.currentY);
     ctx.lineTo(point.toX,point.toY);
-    // ctx.stroke();
-   
+
     ctx.stroke();
 };
 let points = [
@@ -767,25 +792,65 @@ let points = [
     },
 ]
 let mappedPoints = points.map((p) => ({...p, currentX:p.fromX,...p, currentY:p.fromY}));
-function loop(){
-    // window.requestAnimationFrame(loop);
-    setTimeout(loop,1000/60)
+console.log('mappedPoints',mappedPoints)
+let start = Date.now()
+let framesCount = 0
+let moveToDone = false
+let moveToReverseDone = false
+console.log('framesCount',framesCount)
+console.log('moveToDone',moveToDone)
+function loopForward(){ 
+    if(moveToDone){
+        moveToReverseDone = false
+        return
+    }
+    // window.requestAnimationFrame(loopForward);
+    setTimeout(loopForward,1000/240)
+    
+    framesCount++
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     // points.forEach(point => {
     //     moveGraph(point);
     //   });
     mappedPoints.forEach(point => {
-        moveTo(point);
+       moveTo(point);
     });
 
     mappedPoints.forEach(point => {
-
             drawLine(point);
-
     })
+    moveToDone = mappedPoints.every(point => Math.ceil(point.currentX) == point.toX )
+}
+// let forwardAnimation = setInterval(loopForward,30)
+// if(framesCount > 300){
+//     // window.cancelAnimationFrame(loopForward)
+//     clearInterval(forwardAnimation)
+// }
+function loopReverse(){
+    // window.requestAnimationFrame(loop);
+    if(framesCount == 0){
+        moveToDone = false
+        moveToReverseDone = true
+        return
+    }
+    framesCount--
+    setTimeout(loopReverse,1000/240)
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    // points.forEach(point => {
+    //     moveGraph(point);
+    //   });
+    mappedPoints.forEach(point => {
+        reverseMoveTo(point);
+    });
+
+    mappedPoints.forEach(point => {
+            drawLine(point);
+    })
+    // moveToReverseDone = mappedPoints.every(point => Math.ceil(point.currentX) == point.fromX )
 }
 
-switchButton.addEventListener('click',loop)
+switchButton.addEventListener('click',loopForward)
+switchButtonReverse.addEventListener('click',loopReverse)
 // drawLineAndCircle(100,300)
 // drawLineAndCircle(150,330)
 // drawLineAndCircle(200,330)
