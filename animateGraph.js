@@ -13,6 +13,8 @@ let points = [
     { //1
         fromX:50,
         fromY:200,
+        currentFromX: 50,
+        currentFromY: 200,
         drawFromX:50,
         drawFromY:200,
         currentX: 50,
@@ -25,6 +27,8 @@ let points = [
     },{ //2
         fromX:50,
         fromY:200,
+        currentFromX: 50,
+        currentFromY: 200,
         drawFromX:50,
         drawFromY:200,
         currentX: 100,
@@ -36,19 +40,23 @@ let points = [
     },{ //3
         fromX:100,
         fromY:150,
+        currentFromX: 100,
+        currentFromY: 150,
         drawFromX:125,
         drawFromY:175,
         currentX: 150,
         currentY: 200,
         toX: 150,
         toY: 200,
-        drawToX: 175,
-        drawToY: 225
+        drawToX: 125,
+        drawToY: 175
     },{ //4
         fromX:150,
         fromY:200,
-        drawFromX:175,
-        drawFromY:225,
+        currentFromX: 150,
+        currentFromY: 200,
+        drawFromX:125,
+        drawFromY:175,
         currentX: 200,
         currentY: 250,
         toX: 200,
@@ -58,19 +66,23 @@ let points = [
     },{ //5
         fromX:200,
         fromY:250,
+        currentFromX: 200,
+        currentFromY: 250,
         drawFromX:225,
         drawFromY:225,
         currentX: 250,
         currentY: 200,
         toX: 250,
         toY: 200,
-        drawToX: 350,
-        drawToY: 200
+        drawToX: 225,
+        drawToY: 225
     },{ //6
         fromX:250,
         fromY:200,
-        drawFromX:350,
-        drawFromY:200,
+        currentFromX: 250,
+        currentFromY: 200,
+        drawFromX:225,
+        drawFromY:225,
         currentX: 300,
         currentY: 220,
         toX: 300,
@@ -80,19 +92,23 @@ let points = [
     },{ //7
         fromX:300,
         fromY:220,
+        currentFromX: 300,
+        currentFromY: 220,
         drawFromX:325,
         drawFromY:250,
         currentX: 350,
         currentY: 280,
         toX: 350,
         toY: 280,
-        drawToX: 375,
-        drawToY: 300
+        drawToX: 325,
+        drawToY: 250
     },{ //8
         fromX:350,
         fromY:280,
-        drawFromX:375,
-        drawFromY:300,
+        currentFromX: 350,
+        currentFromY: 280,
+        drawFromX:325,
+        drawFromY:250,
         currentX: 400,
         currentY: 250,
         toX: 400,
@@ -102,19 +118,23 @@ let points = [
     },{ //9
         fromX:400,
         fromY:250,
+        currentFromX: 400,
+        currentFromY: 250,
         drawFromX:425,
         drawFromY:265,
         currentX: 450,
         currentY: 280,
         toX: 450,
         toY: 280,
-        drawToX: 475,
-        drawToY: 250
+        drawToX: 425,
+        drawToY: 265
     },{ //10
         fromX:450,
         fromY:280,
-        drawFromX:475,
-        drawFromY:250,
+        currentFromX: 450,
+        currentFromY: 280,
+        drawFromX:425,
+        drawFromY:265,
         currentX: 500,
         currentY: 220,
         toX: 500,
@@ -124,6 +144,8 @@ let points = [
     },{ //11
         fromX:500,
         fromY:220,
+        currentFromX: 500,
+        currentFromY: 220,
         drawFromX:525,
         drawFromY:250,
         currentX: 550,
@@ -135,30 +157,36 @@ let points = [
     },{ //12
         fromX:550,
         fromY:280,
+        currentFromX: 550,
+        currentFromY: 280,
         drawFromX:575,
         drawFromY:240,
         currentX: 600,
         currentY: 200,
         toX: 600,
         toY: 200,
-        drawToX: 550,
-        drawToY: 200
+        drawToX: 575,
+        drawToY: 240
     },{ //13
         fromX:600,
         fromY:200,
-        drawFromX:550,
-        drawFromY:200,
+        currentFromX: 600,
+        currentFromY: 200,
+        drawFromX:575,
+        drawFromY:240,
         currentX: 650,
         currentY: 200,
         toX: 650,
         toY: 200,
-        drawToX: 650,
-        drawToY: 200
+        drawToX: 700,
+        drawToY: 150
     },{ //14
         fromX:650,
         fromY:200,
-        drawFromX:650,
-        drawFromY:200,
+        currentFromX: 650,
+        currentFromY: 200,
+        drawFromX:700,
+        drawFromY:150,
         currentX: 700,
         currentY: 180,
         toX: 700,
@@ -241,8 +269,8 @@ console.log('mappedPoints',mappedPoints)
 function moveTo(point){
     let cofX = point.currentX / point.drawToX
     let cofY = point.currentY / point.drawToY
-    let moveCofX = point.fromX / point.toX
-    let moveCofY = point.fromY / point.toY
+    let moveCofX = point.currentFromX / point.drawFromX
+    let moveCofY = point.currentFromY / point.drawFromY
     if(point.currentX < point.drawToX){
         point.currentX += 1 * cofX
     } if(point.currentX > point.drawToX ){
@@ -252,38 +280,40 @@ function moveTo(point){
     } if(point.currentY > point.drawToY ){
         point.currentY -= 1 * cofY
     } 
-    if(point.fromX < point.drawFromX){
-        point.fromX += 1 * moveCofX
-    } if(point.fromX > point.drawFromX ){
-        point.fromX -= 1 * moveCofX
-    }if(point.fromY < point.drawFromY ){
-        point.fromY += 1 * moveCofY
-    } if(point.fromY > point.drawFromY ){
-        point.fromY -= 1 * moveCofY
+    if(point.currentFromX < point.drawFromX){
+        point.currentFromX += 1 * moveCofX
+    } if(point.currentFromX > point.drawFromX ){
+        point.currentFromX -= 1 * moveCofX
+    }if(point.currentFromY < point.drawFromY ){
+        point.currentFromY += 1 * moveCofY
+    } if(point.currentFromY > point.drawFromY ){
+        point.currentFromY -= 1 * moveCofY
     } 
 };
 
 function reverseMoveTo(point){
-    let cofX = point.currentX / point.toX
-    let cofY = point.currentY / point.toY
-    let moveCofX = point.fromX / point.toX
-    let moveCofY = point.fromY / point.toY
-    if(point.currentX < point.fromX - 1){
+    // console.log('currrentX',currrentX,'currrentY',currrentY)
+    let cofX = Math.ceil(point.currentX) / point.toX
+    let cofY = Math.ceil(point.currentY) / point.toY
+    let moveCofX = Math.ceil(point.currentFromX) / point.fromX
+    let moveCofY = Math.ceil(point.currentFromY) / point.fromY
+    if(point.currentX < point.toX){
         point.currentX += 1 * cofX
-    } if(point.currentX > point.fromX + 1){
+    } if(point.currentX > point.toX){
         point.currentX -= 1 * cofX
-    } if(point.currentY < point.fromY - 1) {
+    } if(point.currentY < point.toY) {
         point.currentY += 1 * cofY
-    } if(point.currentY > point.fromY + 1){
+    } if(point.currentY > point.toY){
         point.currentY -= 1 * cofY
-    }if(point.fromX < point.drawFromX){
-        point.fromX += 1 * moveCofX
-    } if(point.fromX > point.drawFromX ){
-        point.fromX -= 1 * moveCofX
-    }if(point.fromY < point.drawFromY ){
-        point.fromY += 1 * moveCofY
-    } if(point.fromY > point.drawFromY ){
-        point.fromY -= 1 * moveCofY
+    }
+    if(point.currentFromX < point.fromX){
+        point.currentFromX  += 1 * moveCofX
+    } if(point.currentFromX  > point.fromX ){
+        point.currentFromX  -= 1 * moveCofX
+    }if(point.currentFromY < point.fromY ){
+        point.currentFromY += 1 * moveCofY
+    } if(point.currentFromY > point.fromY ){
+        point.currentFromY -= 1 * moveCofY
     } 
 };
 const drawPoint = (point) => {
@@ -292,7 +322,7 @@ const drawPoint = (point) => {
     ctx.beginPath();
     // ctx.moveTo(point.fromX,point.fromY)
     // ctx.arc(point.fromX,point.fromY ,5,0,Math.PI+(Math.PI*1),false) 
-    ctx.moveTo(point.fromX,point.fromY)
+    ctx.moveTo(point.currentFromX,point.currentFromY)
     // ctx.arc(point.currentX,point.currentY ,5,0,Math.PI+(Math.PI*1),false)
     ctx.arc(point.currentX,point.currentY ,5,0,Math.PI+(Math.PI*1),false)
     // ctx.closePath()
@@ -370,7 +400,7 @@ function loopForward(){
             // drawLine(point);
     })
     
-    moveToDone = points.every(point => Math.ceil(point.currentX) == point.toX )
+    moveToDone = points.every(point => Math.ceil(point.currentX) == point.drawToX )
 }
 
 function loopReverse(){
@@ -388,7 +418,7 @@ function loopReverse(){
 
     points.forEach(point => {
 
-         drawLine(point);
+        //  drawLine(point);
          drawPoint(point)
     })
 
