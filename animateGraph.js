@@ -211,7 +211,7 @@ let canvasBox = () => {
     }
     ctx.stroke()
 }
-canvasBox()
+// canvasBox()
 let mappedPoints = [
     {
         fromX:50,
